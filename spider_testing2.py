@@ -51,7 +51,7 @@ class AsyncSpiderFunctions:
 
         browser.select_form('form[action="/search"]')
 
-        browser["q"] = value
+        browser["q"] = str(value)
 
         browser.submit_selected()
         # ---------------------------------------------------
