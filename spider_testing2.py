@@ -16,7 +16,7 @@ import time
 
 
 
-data_json = {}
+
 
 
 def insert_valores_json(row):
@@ -87,6 +87,8 @@ class AsyncSpiderFunctions:
 
 
     async def httpx_http(self,dataframe):
+        data_json = {}
+        
         df = pd.read_excel(dataframe)
 
         df_final = df.copy()
