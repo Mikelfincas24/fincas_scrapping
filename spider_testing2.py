@@ -16,11 +16,10 @@ import streamlit as st
 
 
 
+data_json = {}
 
 
-
-
-def insert_valores_json(row,data_json):
+def insert_valores_json(row):
     try:
         
         if pd.isna(row["EMAIL"]) == True:
@@ -47,7 +46,9 @@ class AsyncSpiderFunctions:
 
 
 
-    async def fetch_httpx_html(self, value,browser,company,indice,client,data_json):
+    async def fetch_httpx_html(self, value,browser,company,indice,client):
+
+
         browser.open("https://www.bing.com")
 
         browser.select_form('form[action="/search"]')
@@ -56,11 +57,10 @@ class AsyncSpiderFunctions:
 
         browser.submit_selected()
         # ---------------------------------------------------
-    
+
         html_content = browser.page.prettify()
 
-        if value == "944022363":
-            st.write(html_content)
+    
 
         emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', html_content)
 
@@ -91,10 +91,6 @@ class AsyncSpiderFunctions:
 
 
     async def httpx_http(self,dataframe):
-
-        data_json = {}
-        
-        
         df = pd.read_excel(dataframe)
 
         df_final = df.copy()
@@ -113,15 +109,24 @@ class AsyncSpiderFunctions:
 
 
             browser = mechanicalsoup.StatefulBrowser()
+
+            browser.session.headers.update(({
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+                "Accept-Language": "es-ES,es;q=0.9",
+                "Connection": "keep-alive",
+                "Referrer-Policy": "origin-when-cross-origin"
+            }))
+
             
-            tasks = [self.fetch_httpx_html(value,browser,company,indice,client,data_json) for value,company,indice in zip(values,company_names,indice_valores)]
+            tasks = [self.fetch_httpx_html(value,browser,company,indice,client) for value,company,indice in zip(values,company_names,indice_valores)]
             results = await asyncio.gather(*tasks)
 
             other_value = sorted(data_json.items(),key=lambda x: int(x[0]))
             values_xp = dict(list(filter(lambda x: "axesor" not in x[1] and "einforma" not in x[1] ,other_value)))
             df_final["Indice"] = list(range(0,df_final.shape[0]))
             df_final["Indice"] = df_final["Indice"].astype(str)
-            df_final["New_email"] = df_final.apply(insert_valores_json,axis=1, args=(data_json,))
+            df_final["New_email"] = df_final.apply(insert_valores_json,axis=1)
             df_final.drop(columns=["EMAIL","Indice"],inplace=True)
             print(data_json)
 
@@ -146,3 +151,4 @@ class AsyncSpiderFunctions:
     # with open(r"C:\Users\Cash\Proyectos\092024\Multiples administradores fincas web scrapping\values.json","w") as j:
     #     json.dump(data_json,j)
     
+
