@@ -99,6 +99,7 @@ def main():
             # pass
             
             df = scrapping_data(dataframe_value)
+            st.write(df[1])
             st.success("Datos extraidos con exito !")
             loading_placeholder.empty()
             # st.markdown("""
@@ -106,7 +107,7 @@ def main():
             #     document.getElementById("loading-container").style.display = "none";
             #     </script>
             # """, unsafe_allow_html=True)
-            st.dataframe(df)
+            st.dataframe(df[0])
             tab1,tab2,tab3 = st.tabs(["CSV","Excel","JSON"])
 
             with tab1:
