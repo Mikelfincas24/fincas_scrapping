@@ -81,7 +81,7 @@ class AsyncSpiderFunctions:
                 email_page = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', soup_data.text)
                 data_json[str(indice)] = email_page[0]
                 
-                print(email_page[0],"---------",value)
+                st.write(email_page[0],"---------",value)
             except Exception as e:
                 print(f"Error: {e}")
 
