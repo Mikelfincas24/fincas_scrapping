@@ -16,7 +16,7 @@ import streamlit as st
 
 
 
-data_json = {}
+
 
 
 def insert_valores_json(row,data_json):
