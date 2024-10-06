@@ -19,7 +19,7 @@ import time
 
 
 
-def insert_valores_json(row):
+def insert_valores_json(row,data_json):
     try:
         
         if pd.isna(row["EMAIL"]) == True:
