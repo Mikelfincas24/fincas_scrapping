@@ -117,7 +117,7 @@ class AsyncSpiderFunctions:
             values_xp = dict(list(filter(lambda x: "axesor" not in x[1] and "einforma" not in x[1] ,other_value)))
             df_final["Indice"] = list(range(0,df_final.shape[0]))
             df_final["Indice"] = df_final["Indice"].astype(str)
-            df_final["New_email"] = df_final.apply(insert_valores_json,axis=1)
+            df_final["New_email"] = df_final.apply(insert_valores_json,axis=1, args=(data_json,))
             df_final.drop(columns=["EMAIL","Indice"],inplace=True)
             print(data_json)
 
