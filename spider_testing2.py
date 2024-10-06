@@ -56,8 +56,11 @@ class AsyncSpiderFunctions:
 
         browser.submit_selected()
         # ---------------------------------------------------
-        st.write(value)
+    
         html_content = browser.page.prettify()
+
+        if value == "944022363":
+            st.write(html_content)
 
         emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', html_content)
 
