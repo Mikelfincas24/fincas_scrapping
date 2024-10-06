@@ -46,7 +46,7 @@ class AsyncSpiderFunctions:
 
 
 
-    async def fetch_httpx_html(self, value,browser,company,indice,client):
+    async def fetch_httpx_html(self, value,browser,company,indice,client,data_json):
         browser.open("https://www.bing.com")
 
         browser.select_form('form[action="/search"]')
@@ -110,7 +110,7 @@ class AsyncSpiderFunctions:
 
             browser = mechanicalsoup.StatefulBrowser()
             
-            tasks = [self.fetch_httpx_html(value,browser,company,indice,client) for value,company,indice in zip(values,company_names,indice_valores)]
+            tasks = [self.fetch_httpx_html(value,browser,company,indice,client,data_json) for value,company,indice in zip(values,company_names,indice_valores)]
             results = await asyncio.gather(*tasks)
 
             other_value = sorted(data_json.items(),key=lambda x: int(x[0]))
