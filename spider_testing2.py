@@ -120,7 +120,7 @@ class AsyncSpiderFunctions:
             df_final.drop(columns=["EMAIL","Indice"],inplace=True)
             print(data_json)
 
-            return df_final
+            return df_final,data_json
 
             # return data_json
             # return results
