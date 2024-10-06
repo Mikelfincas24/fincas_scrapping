@@ -63,7 +63,7 @@ class AsyncSpiderFunctions:
         if emails:
             for email in emails:
                 data_json[str(indice)] = email
-                print(email,value)
+                st.write(f"Email encontrado: {email}, Valor: {value}")
                 return email
 
         # --------------------------------------
